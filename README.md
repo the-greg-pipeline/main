@@ -115,7 +115,8 @@ USER: {question}
 ### Short-form Answer Generation Prompts:
 #### GPT-3.5:
 ```
-Your task is to answer the following question in 2 to 3 words and in a format of factoid answer with respect to the given contexts. DO NOT GENERATE ANYTHING MORE and generate TO-THE-POINT answers.
+Your task is to answer the following question in 2 to 3 words and in a format of factoid answer with respect to the given contexts.
+DO NOT GENERATE ANYTHING MORE and generate TO-THE-POINT answers.
 
 Question: {question}
 
