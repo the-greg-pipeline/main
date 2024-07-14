@@ -103,9 +103,29 @@ python factoid_answer_generator.py \
       --metrics <0,1>
 ```
 
-## Llama Setting
-To run Factoid answer generation for llama 3, set the huggingface access token with the following command:
+## Prompts
+### Long-form Answer Generation Prompts:
+#### GPT-3.5:
 ```
-export HF_TOKEN="your_hugging_face_token"
+SYSTEM: When answering questions, always include relevant information from the question in your response.
+USER: {question}
 ```
-and make sure to set the temperature is greater than 0. 
+#### Llama3-ChatQA:
+
+### Short-form Answer Generation Prompts:
+#### GPT-3.5:
+```
+Your task is to answer the following question in 2 to 3 words and in a format of factoid answer with respect to the given contexts. DO NOT GENERATE ANYTHING MORE and generate TO-THE-POINT answers.
+
+Question: {question}
+
+Contexts:
+1. Title: {title[0]}
+Text: {text[0]}
+
+2. Title: {title[1]}
+Text: {text[1]}
+
+...
+```
+#### Llama3-ChatQA:
