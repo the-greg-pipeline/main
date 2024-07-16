@@ -87,9 +87,16 @@ python factoid_answer_generator.py \
 SYSTEM: When answering questions, always include relevant information from the question in your response.
 USER: {question}
 ```
-#### Llama3-ChatQA:
+#### ChatQA:
+```
+System: This is a chat between a user and an artificial intelligence assistant.
 
-### Short-form Answer Generation Prompts:
+User: Please give a complete and concise answer to the following question. When answering questions, always include relevant information from the question in your response. {question}
+
+Assistant:
+```
+
+### Short-form (factoid) Answer Generation Prompts:
 #### GPT-3.5:
 ```
 Your task is to answer the following question in 2 to 3 words and in a format of factoid answer with respect to the given contexts.
@@ -106,4 +113,19 @@ Text: {text[1]}
 
 ...
 ```
-#### Llama3-ChatQA:
+#### ChatQA:
+```
+System: This is a chat between a user and an artificial intelligence assistant.
+
+1. Title: {title[0]}
+Text: {text[0]}
+
+2. Title: {title[1]}
+Text: {text[1]}
+
+...
+
+User: Your task is to answer the following question in 2 to 3 words and in a format of factoid answer with respect to the given contexts. DO NOT GENERATE ANYTHING MORE and generate TO-THE-POINT answers. {question}
+
+Assistant:
+```
