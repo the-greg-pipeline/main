@@ -18,17 +18,13 @@ conda create --name greg python=3.8
 conda activate greg
 conda install pip
 git clone https://github.com/facebookresearch/FiD.git
-pip install "pydantic>=1.7.4,<3.0.0"
+git clone https://github.com/mhdr3a/GReG.git
+pip install pydantic==2.7.4
+pip install -r FiD/requirements.txt
+pip install -r GReG/requirements.txt
 cd FiD
-pip install -r requirements.txt
-pip install filelock
-pip install typing-extensions
 bash get-data.sh
 bash get-model.sh -m nq_retriever
-wget https://dl.fbaipublicfiles.com/FiD/pretrained_models/tqa_retriever.tar.gz
-tar -xzvf tqa_retriever.tar.gz -C pretrained_models/
-rm tqa_retriever.tar.gz
-conda install six
 python  generate_passage_embeddings.py \
         --model_path pretrained_models/nq_retriever \
         --passages open_domain_data/psgs_w100.tsv \
@@ -36,28 +32,9 @@ python  generate_passage_embeddings.py \
         --shard_id 0 \
         --num_shards 1 \
         --per_gpu_batch_size 500 \
-python  generate_passage_embeddings.py \
-        --model_path pretrained_models/tqa_retriever \
-        --passages open_domain_data/psgs_w100.tsv \
-        --output_path wikipedia_embeddings_tqa \
-        --shard_id 0 \
-        --num_shards 1 \
-        --per_gpu_batch_size 500 \
-pip install gdown
-pip install openai
-pip install IPython
-pip install spacy
-python -m spacy download en_core_web_md
-pip install matplotlib
-pip install termcolor
-pip install unidecode
-pip install rouge-score
-cd ..
-git clone https://github.com/mhdr3a/GReG.git
 cd GReG
+python -m spacy download en_core_web_md
 bash download_datasets.sh # MuSiQue, HotpotQA, IIRC, and 2WikiMultihopQA
-pip install huggingface-hub==0.23.4 pyyaml==6.0.1 safetensors==0.4.3 tokenizers==0.19.1 transformers==4.42.3
-pip install accelerate==0.31.0 psutil==6.0.0
 ```
 
 1. Replace ```FiD/src/data.py``` with ```GReG/src/data.py```
@@ -67,13 +44,13 @@ pip install accelerate==0.31.0 psutil==6.0.0
 
 ```
 <dataset_name> = [MuSiQue, HotpotQA, IIRC, 2WikiMultihopQA, NQ, TQA]
-<model_name> = [gpt-3.5-turbo, gpt-4o]
-<retriever_name> = [nq, tqa]
+<model_name> = [gpt-3.5-turbo, gpt-4o, llama-3]
+<retriever_name> = [nq]
 <temperature> = [0, 1]
 <top_p> = [0.1, 1]
 ```
 
-Passage retrieval using a pre-trained DPR on NQ (percentile = 100: query = question, 50: template query considering entropies, 0: template query ignoring entropies):
+Passage retrieval using a pre-trained DPR on NQ (percentile = 100: query = question + answer, 50: template query considering entropies, 0: template query ignoring entropies):
 ```
 python ../FiD/passage_retrieval.py \
     --model_path ../FiD/pretrained_models/<retriever_name>_retriever \
@@ -84,7 +61,7 @@ python ../FiD/passage_retrieval.py \
     --n-docs 10 \
 ```
 
-Template query generation in 2 ways (percentile = 50: considering the entropies median as a threshold to mask the named entities | 0: masking all the named entities present in the answer yet absent in the question):
+Template query generation in 2 ways (percentile = 50: considering the entropies' median as a threshold to mask the named entities | 0: masking all the named entities present in the answer yet absent in the question):
 ```
 python template_query_generator.py \
     --data data/<dataset_name>/<model_name>/template_queries_<dataset_name>_<model_name>_<0,50>_<temperature>_<top_p>.jsonl \
@@ -93,14 +70,14 @@ python template_query_generator.py \
 ```
 
 Even if you are generating the factoid answers for the dataset itself, make sure to follow the --data path format to ensure all the parameters (like percentile) are set correctly.
-Factoid answer generation using 4 (top_k > 0: with context | top_k = 0: without context) different prompts (metrics are either 0:(EM, ROUGE-F1, Semantic Similarity) or 1:(Sacc, Lacc)):
+Factoid answer generation using 4 (top_k > 0: with context | top_k = 0: without context) different prompts (metrics are either 0:(EM, ROUGE-F1), 1:(Sacc, Lacc), or 2:(EM, ROUGE-F1, Semantic Similarity)):
 ```
 python factoid_answer_generator.py \
       --data results/<dataset_name>/percentile_<0,50,100>/retrieved_passages_<model_name>.json \
       --model <model_name> \
       --top_k <0,1,5,10> \
       --api_key <your_openai_api_key> \
-      --metrics <0,1>
+      --metrics <0,1,2>
 ```
 
 ## Prompts
