@@ -39,11 +39,9 @@ bash src/download_datasets.sh # MuSiQue, HotpotQA, IIRC, and 2WikiMultihopQA
 python src/iirc_preprocess.py --input data/IIRC/dev.json --output data/IIRC/dev_preprocessed.json
 python src/nq_tqa_preprocess.py --input ../FiD/open_domain_data/NQ/test.json --output ../FiD/open_domain_data/NQ/test_preprocessed.json
 python src/nq_tqa_preprocess.py --input ../FiD/open_domain_data/TQA/test.json --output ../FiD/open_domain_data/TQA/test_preprocessed.json
+mv src/data.py ../FiD/src/
+mv src/evaluation.py ../FiD/src/
 ```
-
-1. Replace ```FiD/src/data.py``` with ```GReG/src/data.py```
-
-2. Replace ```FiD/src/evaluation.py``` with ```GReG/src/evaluation.py```
 
 
 ```
