@@ -24,7 +24,7 @@ pip install pydantic==2.7.4
 pip install -r FiD/requirements.txt
 pip install -r GReG/requirements.txt
 cd FiD
-bash get-data.sh
+bash get-data.sh # NQ and TQA
 bash get-model.sh -m nq_retriever
 python  generate_passage_embeddings.py \
         --model_path pretrained_models/nq_retriever \
