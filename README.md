@@ -75,8 +75,7 @@ python template_query_generator.py \
 ```
 
 #### Factoid Answer Generation using a Short-form Answer Generator (SAG)
-Even if you are generating the factoid answers for the dataset questions without additional context, make sure to follow the --data path format to ensure all the parameters (like percentile) are set correctly.
-Factoid answer generation using 4 (top_k > 0: with context | top_k = 0: without context) different prompts (metrics are either 0:(EM, ROUGE-F1), 1:(Sacc, Lacc), or 2:(EM, ROUGE-F1, Semantic Similarity)):
+Even if you are generating factoid answers for the dataset questions without additional context, make sure to follow the --data path format to ensure all parameters (such as percentile) are set correctly. Factoid answer generation using four different prompts (top_k > 0: with context | top_k = 0: without context) with metrics being either 0: (EM, ROUGE-L F1), 1: (Sacc, Lacc), or 2: (EM, ROUGE-L F1, Semantic Similarity):
 ```
 python factoid_answer_generator.py \
       --data results/<dataset_name>/percentile_<percentile>/retrieved_passages_<model_name>.json \
