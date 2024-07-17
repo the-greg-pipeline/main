@@ -19,6 +19,7 @@ conda activate greg
 conda install pip
 git clone https://github.com/facebookresearch/FiD.git
 git clone https://github.com/the-greg-pipeline/main.git
+mv main GReG
 pip install pydantic==2.7.4
 pip install -r FiD/requirements.txt
 pip install -r GReG/requirements.txt
