@@ -37,7 +37,8 @@ def read_json(filepath):
     return data
 
 def main(opt):
-    filepath = opt.data
+    filepath = opt.input
+    output_filepath = opt.output
     ext = filepath.split('.')[-1]
     file_type = filepath.split('.')[-2]
     dataset = 'IIRC'
@@ -54,14 +55,16 @@ def main(opt):
                 ans += 1
             except:
                 no_ans += 1
-    with open(f'{file_type}_preprocessed.json', 'w') as f:
+    with open(output_filepath, 'w') as f:
         json.dump(preprocessed, f, indent=4)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('--data', required=True, type=str, default=None, 
-                        help="Path to the data")
+    parser.add_argument('--input', required=True, type=str, default=None, 
+                        help="Path to the input file")
+    parser.add_argument('--output', required=True, type=str, default=None, 
+                        help="Path to the output file")
     args = parser.parse_args()
     
     main(args)
