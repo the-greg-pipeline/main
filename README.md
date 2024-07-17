@@ -86,6 +86,8 @@ python factoid_answer_generator.py \
 ```
 
 ## Prompts
+Following are the prompts used for the GReG pipeline. We have two sets of prompts: Long-form Answer Generation prompts and Short-form Answer Generation prompts. The former is designed to encourage the LLM to output as much knowledge as possible to help enhance the template query for better passage retrieval. The latter is designed to make the model respond in a few words (factoid), avoiding additional or unnecessary responses. Please note that these prompts are used to obtain the Exact Match (EM) and ROUGE-L F1 results reported in the results table. We also used another set of prompts ([credit](https://github.com/SamyAteia/bioasq)) to evaluate the models with Strict and Lenient Accuracies (Sacc and Lacc); however, we did not find these metrics informative, so we avoided including them in the results. Nevertheless, you can find these prompts in the code.
+
 ### Long-form Answer Generation Prompts:
 #### GPT-3.5:
 ```
