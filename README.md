@@ -55,6 +55,15 @@ From now on, all placeholders used in the commands can be replaced with a value 
 <top_k> = [0, 1, 5, 10]
 ```
 
+#### Template Query Generation using a Long-form Answer Generator (LAG)
+Template query generation in two ways (percentile = 50: considering the entropies' median as a threshold to mask the named entities | 0: masking all the named entities present in the answer but absent in the question):
+```
+python template_query_generator.py \
+    --data data/<dataset_name>/<model_name>/template_queries_<dataset_name>_<model_name>_<percentile>_<temperature>_<top_p>.jsonl \
+    --model <model_name> \
+    --api_key <your_openai_api_key> \
+```
+
 #### Passage Retrieval
 Passage retrieval using a DPR model fine-tuned on the Natural Questions (NQ) dataset (percentile = 100: search query = question + answer, 50: search query = template query considering entropies, 0: search query = template query ignoring entropies):
 ```
@@ -65,15 +74,6 @@ python ../FiD/passage_retrieval.py \
     --passages_embeddings ../FiD/wikipedia_embeddings_nq_00 \
     --output_path results/<dataset_name>/percentile_<percentile>/retrieved_passages_<model_name>_nq.json \
     --n-docs 10 \
-```
-
-#### Template Query Generation using a Long-form Answer Generator (LAG)
-Template query generation in two ways (percentile = 50: considering the entropies' median as a threshold to mask the named entities | 0: masking all the named entities present in the answer but absent in the question):
-```
-python template_query_generator.py \
-    --data data/<dataset_name>/<model_name>/template_queries_<dataset_name>_<model_name>_<percentile>_<temperature>_<top_p>.jsonl \
-    --model <model_name> \
-    --api_key <your_openai_api_key> \
 ```
 
 #### Factoid Answer Generation using a Short-form Answer Generator (SAG)
