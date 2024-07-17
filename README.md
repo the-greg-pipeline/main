@@ -56,7 +56,7 @@ From now on, all placeholders used in the commands can be replaced with a value 
 ```
 
 #### Template Query Generation using a Long-form Answer Generator (LAG)
-Template query generation in two ways (percentile = 50: considering the entropies' median as a threshold to mask the named entities | 0: masking all the named entities present in the answer but absent in the question):
+Template query generation in two ways (percentile = 50: considering the entropies' median as a threshold to remove the named entities | 0: removing all the named entities present in the answer but absent in the question):
 ```
 python template_query_generator.py \
     --data data/<dataset_name>/<model_name>/template_queries_<dataset_name>_<model_name>_<percentile>_<temperature>_<top_p>.jsonl \
