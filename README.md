@@ -35,7 +35,10 @@ python  generate_passage_embeddings.py \
         --per_gpu_batch_size 500 \
 cd GReG
 python -m spacy download en_core_web_md
-bash download_datasets.sh # MuSiQue, HotpotQA, IIRC, and 2WikiMultihopQA
+bash src/download_datasets.sh # MuSiQue, HotpotQA, IIRC, and 2WikiMultihopQA
+python src/iirc_preprocess.py --input data/IIRC/dev.json --output data/IIRC/dev_preprocessed.json
+python src/nq_tqa_preprocess.py --input ../FiD/open_domain_data/NQ/test.json --output ../FiD/open_domain_data/NQ/test_preprocessed.json
+python src/nq_tqa_preprocess.py --input ../FiD/open_domain_data/TQA/test.json --output ../FiD/open_domain_data/TQA/test_preprocessed.json
 ```
 
 1. Replace ```FiD/src/data.py``` with ```GReG/src/data.py```
