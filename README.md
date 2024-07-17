@@ -51,6 +51,8 @@ From now on, all placeholders used in the commands can be replaced with a value 
 <percentile> = [0, 50, 100]
 <temperature> = [0, 1]
 <top_p> = [0.1, 1]
+<metrics> = [0, 1, 2]
+<top_k> = [0, 1, 5, 10]
 ```
 
 #### Passage Retrieval
@@ -80,9 +82,9 @@ Even if you are generating factoid answers for the dataset questions without add
 python factoid_answer_generator.py \
       --data results/<dataset_name>/percentile_<percentile>/retrieved_passages_<model_name>.json \
       --model <model_name> \
-      --top_k <0,1,5,10> \
+      --top_k <top_k> \
       --api_key <your_openai_api_key> \
-      --metrics <0,1,2>
+      --metrics <metrics>
 ```
 
 ## Prompts
